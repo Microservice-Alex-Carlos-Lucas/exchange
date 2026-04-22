@@ -1,0 +1,21 @@
+[project]
+name = "exchange-service"
+version = "0.1.0"
+description = "Currency exchange rate microservice"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.136.0",
+    "requests>=2.33.1",
+    "uvicorn[standard]>=0.45.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "mkdocs-material>=9.7.6",
+    "pytest>=9.0.3",
+    "pytest-mock>=3.15.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

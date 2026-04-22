@@ -1,0 +1,44 @@
+site_name: Exchange API
+site_description: Currency exchange rate microservice — Insper Platforms & Microservices 2026.1
+site_author: Alex Chequer
+repo_url: https://github.com/AlexChequer/exchange
+repo_name: AlexChequer/exchange
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+
+nav:
+  - Home: index.md
+  - API Reference: api.md
+  - Architecture: architecture.md
+  - Development: development.md
