@@ -1,52 +1,68 @@
 # Exchange API
 
 **Aluno:** Alex Chequer  
-**Disciplina:** Plataformas, Microserviços, DevOps e APIs — Insper 2026.1
+**Grupo:** Alex Chequer, Carlos, Lucas  
+**Disciplina:** Plataformas, Microserviços, DevOps e APIs — Insper 2026.1  
+**Instrutor:** Humberto Sandmann
 
 ---
 
-## Visão Geral
+## Sobre o projeto
 
-O Exchange API é um microserviço em Python (FastAPI) que permite a usuários autenticados consultar taxas de câmbio entre moedas em tempo real. As taxas são obtidas da [AwesomeAPI](https://docs.awesomeapi.com.br/api-de-moedas), uma API pública e gratuita sem necessidade de chave.
+O projeto é uma aplicação web que permite aos usuários comprar e vender produtos em diferentes moedas. Cada membro do grupo implementa ao menos um microserviço. Este repositório contém a **Exchange API**, responsável por gerenciar as taxas de câmbio entre diferentes moedas, permitindo que os usuários realizem transações em diferentes moedas.
+
+## Entregas
+
+| Atividade | Status | Repositório |
+|-----------|--------|-------------|
+| Exchange API | ✅ Concluído | [AlexChequer/exchange](https://github.com/AlexChequer/exchange) |
+| Bottleneck 1 — Caching | ✅ Documentado | [Bottlenecks](bottlenecks.md) |
+| Bottleneck 2 — Observabilidade | ✅ Documentado | [Bottlenecks](bottlenecks.md) |
+| Apresentação | ⏳ Pendente | [Apresentação](presentation.md) |
 
 ## Repositórios
 
 | Serviço | Repositório |
 |---------|-------------|
-| Exchange API (este) | [AlexChequer/exchange](https://github.com/AlexChequer/exchange) |
-| Plataforma (auth, account, gateway) | [insper/platform](https://github.com/insper/platform) |
+| Exchange API (este) | [Microservice-Alex-Carlos-Lucas/exchange](https://github.com/Microservice-Alex-Carlos-Lucas/exchange) |
+| Plataforma (raiz) | [Microservice-Alex-Carlos-Lucas/microservices](https://github.com/Microservice-Alex-Carlos-Lucas/microservices) |
+| Product API | [Microservice-Alex-Carlos-Lucas/product-service](https://github.com/Microservice-Alex-Carlos-Lucas/product-service) |
+| Order API | [Microservice-Alex-Carlos-Lucas/order-service](https://github.com/Microservice-Alex-Carlos-Lucas/order-service) |
 
-## Endpoint
+## Arquitetura geral
 
-```
-GET /exchanges/{from}/{to}
-```
+```mermaid
+graph LR
+    internet([Internet]) -->|request| gateway
 
-**Exemplo:**
+    subgraph trusted[Trusted Layer]
+        gateway --> auth
+        gateway --> account
+        gateway --> order
+        gateway --> exchange
+        account --> db[(Database)]
+        order --> db
+    end
 
-```bash
-curl -b "__store_jwt_token=<token>" \
-  http://localhost:8080/exchanges/USD/BRL
-```
-
-**Resposta:**
-
-```json
-{
-  "sell": 5.74,
-  "buy": 5.73,
-  "date": "2024-04-22 09:00:00",
-  "id-account": "abc-123-def-456"
-}
+    exchange -->|HTTP| awesomeapi([AwesomeAPI\n3rd-party])
 ```
 
-!!! warning "Autenticação obrigatória"
-    O usuário deve estar autenticado. O gateway valida o JWT (`__store_jwt_token` cookie) e injeta o header `id-account` antes de encaminhar a requisição ao serviço.
+## Diagrama de sequência — Exchange API
 
-## Stack
+```mermaid
+sequenceDiagram
+    actor User
+    participant Gateway
+    participant Auth
+    participant Exchange
+    participant AwesomeAPI
 
-- **Linguagem:** Python 3.13  
-- **Framework:** FastAPI  
-- **Gerenciador de pacotes:** uv  
-- **API de câmbio:** AwesomeAPI (pública, sem chave)  
-- **Containerização:** Docker  
+    User->>Gateway: GET /exchanges/USD/BRL (cookie JWT)
+    Gateway->>Auth: POST /auth/solve
+    Auth-->>Gateway: { idAccount }
+    Gateway->>Exchange: GET /exchanges/USD/BRL (header: id-account)
+    Exchange->>AwesomeAPI: GET /json/last/USD-BRL
+    AwesomeAPI-->>Exchange: { bid, ask, create_date }
+    Exchange-->>Gateway: { sell, buy, date, id-account }
+    Gateway-->>User: 200 OK
+```
