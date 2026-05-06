@@ -41,4 +41,5 @@ nav:
   - Home: index.md
   - API Reference: api.md
   - Architecture: architecture.md
+  - Bottlenecks: bottlenecks.md
   - Development: development.md

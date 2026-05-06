@@ -42,3 +42,23 @@ def test_get_rate_raises_502_on_client_error(service):
             service.get_rate("USD", "BRL", ACCOUNT_ID)
 
     assert exc_info.value.status_code == 502
+
+
+def test_cache_hit_skips_upstream_fetch(service):
+    with patch("src.service.fetch_exchange_rate", return_value=FAKE_RATE) as mock_fetch:
+        first = service.get_rate("USD", "BRL", ACCOUNT_ID)
+        second = service.get_rate("USD", "BRL", "other-account")
+
+    assert mock_fetch.call_count == 1
+    assert first["sell"] == second["sell"]
+    assert first["id-account"] == ACCOUNT_ID
+    assert second["id-account"] == "other-account"
+
+
+def test_cache_isolated_per_currency_pair(service):
+    eur_rate = {**FAKE_RATE, "bid": "6.20", "ask": "6.21"}
+    with patch("src.service.fetch_exchange_rate", side_effect=[FAKE_RATE, eur_rate]) as mock_fetch:
+        service.get_rate("USD", "BRL", ACCOUNT_ID)
+        service.get_rate("EUR", "BRL", ACCOUNT_ID)
+
+    assert mock_fetch.call_count == 2
