@@ -1,8 +1,8 @@
 site_name: Exchange API — Alex Chequer
 site_author: Alex Chequer
-site_url: https://alexchequer.github.io/exchange
-repo_url: https://github.com/AlexChequer/exchange
-repo_name: AlexChequer/exchange
+site_url: https://microservice-alex-carlos-lucas.github.io/exchange
+repo_url: https://github.com/Microservice-Alex-Carlos-Lucas/exchange
+repo_name: Microservice-Alex-Carlos-Lucas/exchange
 
 theme:
   name: material
