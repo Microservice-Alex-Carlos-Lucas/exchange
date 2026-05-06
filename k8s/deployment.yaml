@@ -25,3 +25,19 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "250m"
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: exchange-configmap
+                  key: PORT
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: exchange-configmap
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: exchange-configmap
+                  key: REDIS_PORT

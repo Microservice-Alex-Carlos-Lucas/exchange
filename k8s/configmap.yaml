@@ -4,3 +4,5 @@ metadata:
   name: exchange-configmap
 data:
   PORT: "8000"
+  REDIS_HOST: redis
+  REDIS_PORT: "6379"
