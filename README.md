@@ -45,7 +45,7 @@ uv run pytest tests/ -v
 uv run mkdocs serve
 ```
 
-Ou acesse a documentação publicada em: `https://alexchequer.github.io/exchange`
+Ou acesse a documentação publicada em: `https://microservice-alex-carlos-lucas.github.io/exchange`
 
 ## Stack
 

@@ -9,7 +9,7 @@
 ## Setup local
 
 ```bash
-git clone https://github.com/AlexChequer/exchange.git
+git clone https://github.com/Microservice-Alex-Carlos-Lucas/exchange.git
 cd exchange
 
 # Instalar dependências (incluindo dev)

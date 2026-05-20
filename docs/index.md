@@ -15,7 +15,7 @@ O projeto é uma aplicação web que permite aos usuários comprar e vender prod
 
 | Atividade | Status | Repositório |
 |-----------|--------|-------------|
-| Exchange API | ✅ Concluído | [AlexChequer/exchange](https://github.com/AlexChequer/exchange) |
+| Exchange API | ✅ Concluído | [Microservice-Alex-Carlos-Lucas/exchange](https://github.com/Microservice-Alex-Carlos-Lucas/exchange) |
 | Bottleneck 1 — Caching | ✅ Documentado | [Bottlenecks](bottlenecks.md) |
 | Bottleneck 2 — Observabilidade | ✅ Documentado | [Bottlenecks](bottlenecks.md) |
 | Bottlenecks (medidos) | ✅ 91× speedup com Redis cache | [Bottlenecks](bottlenecks.md) |
